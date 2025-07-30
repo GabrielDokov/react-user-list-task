@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { jsonPlaceholderApi } from "../../api/jsonPlaceholderApi";
 import { AxiosError, HttpStatusCode } from "axios";
 
-export const deletePostByIdThunk = createAsyncThunk(
+export const deletePostByIdThunk = createAsyncThunk<number, number, { rejectValue: string }>(
   "posts/deletePostById",
   async (postId: number, { rejectWithValue }) => {
     try {
@@ -10,9 +10,9 @@ export const deletePostByIdThunk = createAsyncThunk(
       return postId;
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === HttpStatusCode.NotFound) {
-        return rejectWithValue("Handle errors"); //TODO make the errors when request failed
+        return rejectWithValue("Failed to delete post");
       }
+      return rejectWithValue("Unknown error");
     }
-    return rejectWithValue("Handle errors");
   },
 );

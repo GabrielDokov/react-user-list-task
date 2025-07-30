@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { jsonPlaceholderApi } from "../../api/jsonPlaceholderApi";
 import { AxiosError, HttpStatusCode } from "axios";
+import { UserData } from "../../types/UserData";
 
-export const fetchUsersThunk = createAsyncThunk(
+export const fetchUsersThunk = createAsyncThunk<UserData[], void, { rejectValue: string }>(
   "users/fetchUsers",
   async (_, { rejectWithValue }) => {
     try {
@@ -11,8 +12,9 @@ export const fetchUsersThunk = createAsyncThunk(
       return usersInfo.data;
     } catch (error) {
       if (error instanceof AxiosError && error.response?.status === HttpStatusCode.NotFound) {
-        return rejectWithValue("Handle errors"); //TODO make the errors when request failed
+        return rejectWithValue("Users not found");
       }
+      return rejectWithValue("Unknown error");
     }
   },
 );

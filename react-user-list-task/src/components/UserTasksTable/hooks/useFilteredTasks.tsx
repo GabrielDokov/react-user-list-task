@@ -5,7 +5,7 @@ import { TaskData } from "../../../types/TaskData";
 const useFilteredTasks = (
   tasks: TaskData[],
   titleFilter: string,
-  statusFilter: StatusesEnum,
+  statusFilter: StatusesEnum | null,
   ownerFilter: number | null,
 ) => {
   const filteredTasks = useMemo(() => {

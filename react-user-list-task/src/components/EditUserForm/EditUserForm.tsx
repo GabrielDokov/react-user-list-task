@@ -1,26 +1,27 @@
-import React, { Dispatch, SetStateAction } from "react";
 import { Formik, FormikHelpers } from "formik";
-import { Row, Col, Input, Form, Modal, Button, notification } from "antd";
+import { Row, Col, Input, Form, Modal, Button } from "antd";
 import { UserData } from "../../types/UserData";
 import { useAppDispatch } from "../../store";
 import { updateUser } from "../../features/slices/userInfoSlice";
 import { validationSchema } from "./formConfig";
+import { useContext } from "react";
+import { NotificationContext } from "../../context/NotificationContextProvider";
 
 type Props = {
   user: UserData;
   isFormOpen: boolean;
-  setIsFormOpen: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
 };
 
-const EditUserForm = ({ user, isFormOpen, setIsFormOpen }: Props) => {
+const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
   const dispatch = useAppDispatch();
-  const [notificationInstance, contextHolder] = notification.useNotification();
+  const { notification } = useContext(NotificationContext);
 
   const handleEditUser = async (values: UserData, { resetForm }: FormikHelpers<UserData>) => {
     dispatch(updateUser(values));
-    notificationInstance.success({ message: "Updated successfully" });
+    notification.success({ message: "User updated successfully" });
     resetForm();
-    setIsFormOpen(false);
+    onClose();
   };
 
   return (
@@ -36,14 +37,14 @@ const EditUserForm = ({ user, isFormOpen, setIsFormOpen }: Props) => {
           width={700}
           onCancel={() => {
             handleReset();
-            setIsFormOpen(false);
+            onClose();
           }}
           footer={
             <>
               <Button
                 onClick={() => {
                   handleReset();
-                  setIsFormOpen(false);
+                  onClose();
                 }}
               >
                 Return
@@ -55,7 +56,6 @@ const EditUserForm = ({ user, isFormOpen, setIsFormOpen }: Props) => {
           }
           title={"Edit User Information"}
         >
-          {contextHolder}
           <Form>
             <Row gutter={24}>
               <Col span={12}>

@@ -1,14 +1,14 @@
 import { Layout } from "antd";
-import React from "react";
 import { Outlet } from "react-router";
 import MenuItems from "../MenuItems/MenuItems";
+import classes from "./AppLayout.module.scss";
 
 const AppLayout = () => (
   <Layout>
-    <Layout.Sider style={{ height: "100dvh" }}>
+    <Layout.Sider className={classes.sider}>
       <MenuItems />
     </Layout.Sider>
-    <Layout.Content style={{ padding: 24, maxHeight: "100vh", overflow: "auto" }}>
+    <Layout.Content className={classes.content}>
       <Outlet />
     </Layout.Content>
   </Layout>

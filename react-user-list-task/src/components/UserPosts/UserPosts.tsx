@@ -1,5 +1,5 @@
-import { Button, Divider, Flex, Modal, notification, Typography } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Card, Col, Divider, Empty, Flex, List, Modal, Typography } from "antd";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { fetchPostsByUserIdThunk } from "../../features/thunks/fetchPostsByUserIdThunk";
@@ -8,11 +8,13 @@ import EditUserForm from "../EditUserForm/EditUserForm";
 import { deletePostByIdThunk } from "../../features/thunks/deletePostByIdThunk";
 import EditPostForm from "../EditPostForm/EditPostForm";
 import { PostData } from "../../types/PostsData";
+import classes from "./UserPost.module.scss";
+import { NotificationContext } from "../../context/NotificationContextProvider";
 
 const UserPosts = () => {
   const { userId } = useParams();
   const dispatch = useAppDispatch();
-  const { posts } = useAppSelector((state) => state.posts);
+  const { posts, isLoading } = useAppSelector((state) => state.posts);
   const users = useAppSelector((state) => state.userInfo.users);
   const navigate = useNavigate();
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -20,8 +22,7 @@ const UserPosts = () => {
   const [deletePostId, setDeletePostId] = useState<number | null>(null);
   const [editingPost, setEditingPost] = useState<PostData | null>(null);
   const user = users.find((user) => user.id === Number(userId));
-  const [notificationInstance, contextHolder] = notification.useNotification();
-
+  const { notification } = useContext(NotificationContext);
   useEffect(() => {
     if (userId) {
       dispatch(fetchPostsByUserIdThunk(userId));
@@ -37,7 +38,7 @@ const UserPosts = () => {
   const handleDeleteConfirm = async () => {
     if (deletePostId) {
       await dispatch(deletePostByIdThunk(deletePostId));
-      notificationInstance.success({ message: "Post deleted successfully!" });
+      notification.success({ message: "Post deleted successfully!" });
       setDeletePostId(null);
       setIsDeleteModalOpen(false);
     }
@@ -45,63 +46,100 @@ const UserPosts = () => {
 
   return (
     <>
-      <div>
-        {contextHolder}
-        <Modal
-          title={"Are you sure you want to delete this post?"}
-          onCancel={() => setIsDeleteModalOpen(false)}
-          open={isDeleteModalOpen}
-          footer={
-            <>
-              <Button
-                onClick={() => {
-                  setIsDeleteModalOpen(false);
-                  setDeletePostId(null);
-                }}
-              >
-                Cancel
-              </Button>
-              <Button onClick={() => handleDeleteConfirm()} type="primary" danger>
-                Delete
-              </Button>
-            </>
-          }
-        />
-        <Button onClick={() => navigate("/")}>← Back to Users</Button>
-        <Typography.Title level={2}>Posts by {user?.name}</Typography.Title>
-        <Flex vertical>
-          <Typography.Text>Username: {user?.username}</Typography.Text>
-          <Typography.Text>Email: {user?.email}</Typography.Text>
-          <Typography.Text>Name: {user?.name}</Typography.Text>
-        </Flex>
-        <Button type="primary" onClick={() => setIsFormOpen(true)}>
-          Edit
-        </Button>
-        {user && <EditUserForm user={user} isFormOpen={isFormOpen} setIsFormOpen={setIsFormOpen} />}
-        <Divider />
-        {editingPost && (
-          <EditPostForm
-            post={editingPost}
-            isOpen={true}
-            onClose={() => setEditingPost(null)}
-            notificationApi={notificationInstance}
+      <Modal
+        title={"Are you sure you want to delete this post?"}
+        onCancel={() => setIsDeleteModalOpen(false)}
+        open={isDeleteModalOpen}
+        footer={
+          <>
+            <Button
+              onClick={() => {
+                setIsDeleteModalOpen(false);
+                setDeletePostId(null);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button onClick={() => handleDeleteConfirm()} type="primary" danger>
+              Delete
+            </Button>
+          </>
+        }
+      />
+      <Button type="link" onClick={() => navigate("/")}>
+        ← Back to Users
+      </Button>
+      {posts.length === 0 && !isLoading ? (
+        <Empty />
+      ) : (
+        <>
+          <Col xs={8}>
+            <Card
+              title={
+                <Typography.Title className={classes.userCardTitle} level={3}>
+                  Posts by {user?.name}
+                </Typography.Title>
+              }
+              extra={
+                <Button type="primary" onClick={() => setIsFormOpen(true)}>
+                  Edit
+                </Button>
+              }
+            >
+              <Flex vertical>
+                <Typography.Text>Username: {user?.username}</Typography.Text>
+                <Typography.Text>Email: {user?.email}</Typography.Text>
+                <Typography.Text>Name: {user?.name}</Typography.Text>
+                <Typography.Text>Phone: {user?.phone}</Typography.Text>
+                <Typography.Text>City: {user?.address.city}</Typography.Text>
+              </Flex>
+            </Card>
+          </Col>
+
+          {user && (
+            <EditUserForm
+              user={user}
+              isFormOpen={isFormOpen}
+              onClose={() => setIsFormOpen(false)}
+            />
+          )}
+          <Divider />
+          {editingPost && (
+            <EditPostForm
+              post={editingPost}
+              isOpen={true}
+              onClose={() => setEditingPost(null)}
+              notificationApi={notification}
+            />
+          )}
+          <List
+            grid={{ gutter: [24, 24], column: 4 }}
+            loading={isLoading}
+            dataSource={posts}
+            renderItem={(post) => (
+              <Col>
+                <Card
+                  title={post.title}
+                  actions={[
+                    <Flex align="center" justify="center" gap={24}>
+                      <Button onClick={() => setEditingPost(post)} type="primary">
+                        Edit
+                      </Button>
+                      <Button type="primary" onClick={() => showDeleteConfirm(post.id)} danger>
+                        Delete
+                      </Button>
+                    </Flex>,
+                  ]}
+                >
+                  <Col className={classes.cardMeteContainer}>
+                    <Card.Meta description={post.body} />
+                  </Col>
+                </Card>
+              </Col>
+            )}
           />
-        )}
-        {posts.map((post) => (
-          <Flex vertical key={post.id}>
-            <Typography.Title level={4}>{post.title}</Typography.Title>
-            <Typography.Paragraph>{post.body}</Typography.Paragraph>
-            <Flex gap={12}>
-              <Button onClick={() => setEditingPost(post)} type="primary">
-                Edit
-              </Button>
-              <Button type="primary" onClick={() => showDeleteConfirm(post.id)} danger>
-                Delete
-              </Button>
-            </Flex>
-          </Flex>
-        ))}
-      </div>
+        </>
+      )}
     </>
   );
 };

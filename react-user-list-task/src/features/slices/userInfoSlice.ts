@@ -2,12 +2,12 @@ import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 import { fetchUsersThunk } from "../thunks/fetchUsersThunk";
 import { UserData } from "../../types/UserData";
 
-export type UserState = {
+export type UsersState = {
   users: UserData[];
   isLoading: boolean;
 };
 
-const initialState: UserState = {
+const initialState: UsersState = {
   users: [],
   isLoading: false,
 };
