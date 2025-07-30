@@ -1,8 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import userInfoSlice from "./slices/userInfoSlice";
+import userInfo from "./slices/userInfoSlice";
+import posts from "./slices/postsSlice";
 
 const rootReducer = combineReducers({
-  userInfoSlice,
+  userInfo,
+  posts,
 });
 
 export default rootReducer;
