@@ -1,4 +1,4 @@
-# react-user-list-task# User and Task Management Dashboard
+# User and Task Management Dashboard
 
 This is a web application built with React and TypeScript that serves as a client for the JSONPlaceholder API. It allows users to view, edit, and manage a list of users, their posts, and a shared task list with advanced filtering and pagination.
 
