@@ -5,7 +5,6 @@ import { PostData } from "../../types/PostsData";
 import { useAppDispatch } from "../../store";
 import { updatePostThunk } from "../../features/thunks/updatePostThunk";
 import { NotificationInstance } from "antd/es/notification/interface";
-import TextArea from "antd/es/input/TextArea";
 
 type Props = {
   post: PostData;
@@ -82,7 +81,7 @@ const EditPostForm = ({ post, isOpen, onClose, notificationApi }: Props) => {
                 </Col>
                 <Col span={24}>
                   <Form.Item label="Body" validateStatus={errors.body ? "error" : ""} required>
-                    <TextArea
+                    <Input.TextArea
                       rows={3}
                       name="body"
                       value={values.body}

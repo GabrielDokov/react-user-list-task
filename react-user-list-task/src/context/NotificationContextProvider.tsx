@@ -1,8 +1,8 @@
 import { NotificationInstance } from "antd/es/notification/interface";
-import useNotification from "antd/es/notification/useNotification";
 import { createContext, PropsWithChildren, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
 import { resetError } from "../features/slices/notificationSlice";
+import { notification as notificaitonInstance } from "antd";
 
 type NotificationContextState = {
   notification: NotificationInstance;
@@ -22,7 +22,7 @@ const initialState: NotificationContextState = {
 export const NotificationContext = createContext(initialState);
 
 const NotificationContextProvider = ({ children }: PropsWithChildren) => {
-  const [notification, notificationContext] = useNotification();
+  const [notification, notificationContext] = notificaitonInstance.useNotification();
   const { hasError, message } = useAppSelector((state) => state.notification);
   const dispatch = useAppDispatch();
 

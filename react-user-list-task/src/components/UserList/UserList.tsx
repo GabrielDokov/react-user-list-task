@@ -1,8 +1,7 @@
-import { useAppDispatch, useAppSelector } from "../../store";
+import { useAppSelector } from "../../store";
 import { Collapse, Typography, Button, Spin, Flex } from "antd";
 import EditUserForm from "../EditUserForm/EditUserForm";
-import { useEffect, useState } from "react";
-import { fetchUsersThunk } from "../../features/thunks/fetchUsersThunk";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { UserData } from "../../types/UserData";
 import classes from "./UserList.module.scss";
@@ -11,12 +10,7 @@ import UserCard from "../UserCard/UserCard";
 const UserList = () => {
   const [editingUser, setEditingUser] = useState<UserData | null>(null);
   const { users, isLoading } = useAppSelector((state) => state.userInfo);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(fetchUsersThunk());
-  }, [dispatch]);
 
   return (
     <>

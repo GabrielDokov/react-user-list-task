@@ -1,8 +1,6 @@
 import { Button, Card, Col, Empty, Flex, Input, Row, Select, Switch, Tag, Typography } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { fetchTasksThunk } from "../../features/thunks/fetchTasksThunk";
-import { fetchUsersThunk } from "../../features/thunks/fetchUsersThunk";
 import usePagination from "./hooks/usePagination";
 import { StatusesEnum } from "../../types/StatusesEnum";
 import { toggleTaskStatus } from "../../features/slices/tasksSlice";
@@ -27,11 +25,6 @@ const UserTasks = () => {
     setCurrentPage,
   } = usePagination(filteredTasks);
   const { notification } = useContext(NotificationContext);
-
-  useEffect(() => {
-    dispatch(fetchTasksThunk());
-    dispatch(fetchUsersThunk());
-  }, [dispatch]);
 
   useEffect(() => {
     setCurrentPage(1);
