@@ -5,6 +5,7 @@ import { PostData } from "../../types/PostsData";
 import { useAppDispatch } from "../../store";
 import { updatePostThunk } from "../../features/thunks/updatePostThunk";
 import { NotificationInstance } from "antd/es/notification/interface";
+import TextArea from "antd/es/input/TextArea";
 
 type Props = {
   post: PostData;
@@ -30,8 +31,19 @@ const EditPostForm = ({ post, isOpen, onClose, notificationApi }: Props) => {
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={handleEditPost}
+        validateOnChange={false}
+        validateOnBlur={true}
       >
-        {({ dirty, isValid, handleReset, values, handleChange, handleSubmit }) => (
+        {({
+          dirty,
+          isValid,
+          errors,
+          values,
+          handleReset,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+        }) => (
           <Modal
             open={isOpen}
             width={700}
@@ -59,13 +71,24 @@ const EditPostForm = ({ post, isOpen, onClose, notificationApi }: Props) => {
             <Form>
               <Row gutter={24}>
                 <Col span={24}>
-                  <Form.Item label="Title" required>
-                    <Input name="title" value={values.title} onChange={handleChange} />
+                  <Form.Item label="Title" validateStatus={errors.title ? "error" : ""} required>
+                    <Input
+                      name="title"
+                      value={values.title}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
                   </Form.Item>
                 </Col>
                 <Col span={24}>
-                  <Form.Item label="Body" required>
-                    <Input name="body" value={values.body} onChange={handleChange} />
+                  <Form.Item label="Body" validateStatus={errors.body ? "error" : ""} required>
+                    <TextArea
+                      rows={3}
+                      name="body"
+                      value={values.body}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
                   </Form.Item>
                 </Col>
               </Row>
