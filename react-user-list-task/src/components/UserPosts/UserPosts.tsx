@@ -1,4 +1,4 @@
-import { Button, Card, Col, Divider, Empty, Flex, List, Modal, Typography } from "antd";
+import { Button, Card, Col, Divider, Empty, Flex, List, Modal } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -10,6 +10,7 @@ import EditPostForm from "../EditPostForm/EditPostForm";
 import { PostData } from "../../types/PostsData";
 import classes from "./UserPost.module.scss";
 import { NotificationContext } from "../../context/NotificationContextProvider";
+import UserCard from "../UserCard/UserCard";
 
 const UserPosts = () => {
   const { userId } = useParams();
@@ -23,6 +24,7 @@ const UserPosts = () => {
   const [editingPost, setEditingPost] = useState<PostData | null>(null);
   const user = users.find((user) => user.id === Number(userId));
   const { notification } = useContext(NotificationContext);
+
   useEffect(() => {
     if (userId) {
       dispatch(fetchPostsByUserIdThunk(userId));
@@ -73,27 +75,18 @@ const UserPosts = () => {
         <Empty />
       ) : (
         <>
-          <Col xs={8}>
-            <Card
-              title={
-                <Typography.Title className={classes.userCardTitle} level={3}>
-                  Posts by {user?.name}
-                </Typography.Title>
-              }
-              extra={
-                <Button type="primary" onClick={() => setIsFormOpen(true)}>
-                  Edit
-                </Button>
-              }
-            >
-              <Flex vertical>
-                <Typography.Text>Username: {user?.username}</Typography.Text>
-                <Typography.Text>Email: {user?.email}</Typography.Text>
-                <Typography.Text>Name: {user?.name}</Typography.Text>
-                <Typography.Text>Phone: {user?.phone}</Typography.Text>
-                <Typography.Text>City: {user?.address.city}</Typography.Text>
-              </Flex>
-            </Card>
+          <Col xs={12}>
+            {user && (
+              <UserCard
+                extra={
+                  <Button type="primary" onClick={() => setIsFormOpen(true)}>
+                    Edit
+                  </Button>
+                }
+                user={user}
+                title={`Posts by ${user?.name}`}
+              />
+            )}
           </Col>
 
           {user && (

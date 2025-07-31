@@ -29,6 +29,7 @@ const UserTasks = () => {
 
   return (
     <>
+      <Typography.Title className={classes.title}>{"Tasks"}</Typography.Title>
       <Row gutter={[16, 16]} className={classes.filterContainer}>
         <Col xs={4}>
           <Typography.Text strong>Filter by Title</Typography.Text>

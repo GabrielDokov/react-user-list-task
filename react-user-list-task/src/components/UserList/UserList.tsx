@@ -1,10 +1,12 @@
 import { useAppDispatch, useAppSelector } from "../../store";
-import { Collapse, Typography, Button, Spin, Flex, Card } from "antd";
+import { Collapse, Typography, Button, Spin, Flex } from "antd";
 import EditUserForm from "../EditUserForm/EditUserForm";
 import { useEffect, useState } from "react";
 import { fetchUsersThunk } from "../../features/thunks/fetchUsersThunk";
 import { useNavigate } from "react-router";
 import { UserData } from "../../types/UserData";
+import classes from "./UserList.module.scss";
+import UserCard from "../UserCard/UserCard";
 
 const UserList = () => {
   const [editingUser, setEditingUser] = useState<UserData | null>(null);
@@ -24,22 +26,17 @@ const UserList = () => {
       {isLoading ? (
         <Spin fullscreen spinning={isLoading} />
       ) : (
-        <Collapse
-          accordion
-          items={users.map((user) => ({
-            key: user.id,
-            label: user.name,
-            children: (
-              <Card>
-                <Flex gap={8} vertical>
-                  <Typography.Text>Name: {user?.name}</Typography.Text>
-                  <Typography.Text>Username: {user?.username}</Typography.Text>
-                  <Typography.Text>Email: {user?.email}</Typography.Text>
-                  <Typography.Text>Phone: {user?.phone}</Typography.Text>
-                  <Typography.Text>Website: {user?.website}</Typography.Text>
-                  <Typography.Text>City: {user?.address.city}</Typography.Text>
-                  <Typography.Text>Street: {user?.address.street}</Typography.Text>
-                  <Flex gap={12}>
+        <>
+          <Typography.Title className={classes.title}>{"Users"}</Typography.Title>
+          <Collapse
+            style={{ width: 800 }}
+            accordion
+            items={users.map((user) => ({
+              key: user.id,
+              label: user.name,
+              children: (
+                <UserCard user={user}>
+                  <Flex className={classes.buttonsContainer}>
                     <Button type="primary" onClick={() => setEditingUser(user)}>
                       Edit
                     </Button>
@@ -47,11 +44,11 @@ const UserList = () => {
                       See Post
                     </Button>
                   </Flex>
-                </Flex>
-              </Card>
-            ),
-          }))}
-        />
+                </UserCard>
+              ),
+            }))}
+          />
+        </>
       )}
     </>
   );
