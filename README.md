@@ -44,7 +44,7 @@ This is a web application built with React and TypeScript that serves as a clien
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/GabrielDokov/react-user-list-task
+    git clone https://github.com/GabrielDokov/react-user-list-task.git
     ```
 
 2.  **Navigate to the project directory:**
