@@ -57,8 +57,9 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
                   handleReset();
                   onClose();
                 }}
+                disabled={!dirty}
               >
-                Return
+                Cancel
               </Button>
               <Button onClick={() => handleSubmit()} disabled={!dirty || !isValid} type="primary">
                 Submit
