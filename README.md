@@ -33,20 +33,18 @@ This is a web application built with React and TypeScript that serves as a clien
 -   **Testing:** Jest & React Testing Library
 -   **Build Tool:** Create React App
 
+## Bonus 
+-   **Create tests with Jest:**
+    -   Create a test for **Applayout.tsx** and **UserList.tsx** components
+    -   Create **renderWithProvders.tsx** to test components witch used data from **Redux**
+
 ## Getting Started
-
-Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
-
-### Prerequisites
-
--   Node.js (v16 or later recommended)
--   npm or yarn
 
 ### Installation
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/react-user-list-task.git
+    git clone https://github.com/GabrielDokov/react-user-list-task
     ```
 
 2.  **Navigate to the project directory:**
@@ -67,7 +65,6 @@ To start the development server, run the following command:
 npm start
 ```
 
-
 ### Running the Tests
 
 To start the tests, run the following command:
@@ -75,7 +72,3 @@ To start the tests, run the following command:
 ```bash
 npm run test:watch or npm test
 ```
-
-
-> **Note:** The snapshot tests were created by passing a preloaded Redux state to the component using a custom `renderWithProviders` utility. This ensures the component renders with the expected initial state during testing.
-
