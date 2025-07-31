@@ -18,14 +18,24 @@ const UserTasks = () => {
   const users = useAppSelector((state) => state.userInfo.users);
   const dispatch = useAppDispatch();
   const filteredTasks = useFilteredTasks(tasks, titleFilter, statusFilter, ownerFilter);
-  const { paginatedTasks, totalPages, currentPage, handleNextPage, handlePrevPage } =
-    usePagination(filteredTasks);
+  const {
+    paginatedTasks,
+    totalPages,
+    currentPage,
+    handleNextPage,
+    handlePrevPage,
+    setCurrentPage,
+  } = usePagination(filteredTasks);
   const { notification } = useContext(NotificationContext);
 
   useEffect(() => {
     dispatch(fetchTasksThunk());
     dispatch(fetchUsersThunk());
   }, [dispatch]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [titleFilter, statusFilter, ownerFilter, setCurrentPage]);
 
   return (
     <>

@@ -23,7 +23,9 @@ const useFilteredTasks = (
         return true;
       })
       .filter((task) => {
-        if (ownerFilter) return task.userId === ownerFilter;
+        if (ownerFilter) {
+          return task.userId === ownerFilter;
+        }
         return true;
       });
   }, [tasks, titleFilter, statusFilter, ownerFilter]);

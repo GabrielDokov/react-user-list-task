@@ -1,4 +1,4 @@
-import { Button, Card, Col, Divider, Empty, Flex, List, Modal } from "antd";
+import { Button, Card, Col, Divider, Empty, Flex, List, Modal, Typography } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -77,40 +77,37 @@ const UserPosts = () => {
       >
         Back to Users
       </Button>
-      {posts.length === 0 && !isLoading ? (
-        <Empty />
-      ) : (
-        <>
-          <Col xs={12}>
-            {user && (
-              <UserCard
-                extra={
-                  <Button type="primary" onClick={() => setIsFormOpen(true)}>
-                    Edit
-                  </Button>
-                }
-                user={user}
-                title={`Posts by ${user?.name}`}
-              />
-            )}
-          </Col>
 
+      <>
+        <Col xs={12}>
           {user && (
-            <EditUserForm
+            <UserCard
+              extra={
+                <Button type="primary" onClick={() => setIsFormOpen(true)}>
+                  Edit
+                </Button>
+              }
               user={user}
-              isFormOpen={isFormOpen}
-              onClose={() => setIsFormOpen(false)}
+              title={`Posts by ${user?.name}`}
             />
           )}
-          <Divider />
-          {editingPost && (
-            <EditPostForm
-              post={editingPost}
-              isOpen={true}
-              onClose={() => setEditingPost(null)}
-              notificationApi={notification}
-            />
-          )}
+        </Col>
+
+        {user && (
+          <EditUserForm user={user} isFormOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
+        )}
+        <Divider />
+        {editingPost && (
+          <EditPostForm
+            post={editingPost}
+            isOpen={true}
+            onClose={() => setEditingPost(null)}
+            notificationApi={notification}
+          />
+        )}
+        {posts.length === 0 && !isLoading ? (
+          <Empty description={<Typography.Text>No posts</Typography.Text>} />
+        ) : (
           <List
             grid={{ gutter: [24, 24], column: 4 }}
             loading={isLoading}
@@ -137,8 +134,8 @@ const UserPosts = () => {
               </Col>
             )}
           />
-        </>
-      )}
+        )}
+      </>
     </>
   );
 };
