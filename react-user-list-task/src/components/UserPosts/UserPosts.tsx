@@ -11,6 +11,7 @@ import { PostData } from "../../types/PostsData";
 import classes from "./UserPost.module.scss";
 import { NotificationContext } from "../../context/NotificationContextProvider";
 import UserCard from "../UserCard/UserCard";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const UserPosts = () => {
   const { userId } = useParams();
@@ -68,8 +69,13 @@ const UserPosts = () => {
           </>
         }
       />
-      <Button type="link" onClick={() => navigate("/")}>
-        ← Back to Users
+      <Button
+        icon={<ArrowLeftOutlined />}
+        className={classes.backButton}
+        type="link"
+        onClick={() => navigate("/")}
+      >
+        Back to Users
       </Button>
       {posts.length === 0 && !isLoading ? (
         <Empty />

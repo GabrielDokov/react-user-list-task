@@ -7,7 +7,7 @@ export const validationSchema = Yup.object().shape({
     street: Yup.string().min(3).max(50).required(),
     suite: Yup.string().min(3).max(50).required(),
     city: Yup.string().min(3).max(50).required(),
-    zipcode: Yup.number().notRequired(),
+    zipcode: Yup.string().notRequired(),
     geo: Yup.object().shape({
       lat: Yup.number().notRequired(),
       lng: Yup.number().notRequired(),
