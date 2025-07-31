@@ -30,8 +30,19 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
       validationSchema={validationSchema}
       enableReinitialize
       onSubmit={handleEditUser}
+      validateOnChange={false}
+      validateOnBlur={true}
     >
-      {({ dirty, isValid, handleReset, values, handleChange, handleSubmit }) => (
+      {({
+        dirty,
+        isValid,
+        errors,
+        handleReset,
+        values,
+        handleChange,
+        handleSubmit,
+        handleBlur,
+      }) => (
         <Modal
           open={isFormOpen}
           width={700}
@@ -59,13 +70,71 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
           <Form>
             <Row gutter={24}>
               <Col span={12}>
-                <Form.Item label="Username" required>
-                  <Input name="username" value={values.username} onChange={handleChange} />
+                <Form.Item
+                  label="Username"
+                  validateStatus={errors.username ? "error" : ""}
+                  required
+                >
+                  <Input
+                    name="username"
+                    value={values.username}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Email" required>
-                  <Input name="email" value={values.email} onChange={handleChange} />
+                <Form.Item label="Email" validateStatus={errors.email ? "error" : ""} required>
+                  <Input
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={8}>
+                <Form.Item
+                  label="Street"
+                  validateStatus={errors.address?.street ? "error" : ""}
+                  required
+                >
+                  <Input
+                    name="address.street"
+                    value={values.address.street}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  label="Suite"
+                  validateStatus={errors.address?.suite ? "error" : ""}
+                  required
+                >
+                  <Input
+                    name="address.suite"
+                    value={values.address.suite}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  label="City"
+                  validateStatus={errors.address?.city ? "error" : ""}
+                  required
+                >
+                  <Input
+                    name="address.city"
+                    value={values.address.city}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
                 </Form.Item>
               </Col>
             </Row>
@@ -76,36 +145,12 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="City">
-                  <Input name="address.city" value={values.address.city} onChange={handleChange} />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={24}>
-              <Col span={8}>
-                <Form.Item label="Street" required>
-                  <Input
-                    name="address.street"
-                    value={values.address.street}
-                    onChange={handleChange}
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item label="Suite" required>
-                  <Input
-                    name="address.suite"
-                    value={values.address.suite}
-                    onChange={handleChange}
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item label="Zipcode" required>
+                <Form.Item label="Zipcode" validateStatus={errors.address?.street ? "error" : ""}>
                   <Input
                     name="address.zipcode"
                     value={values.address.zipcode}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                   />
                 </Form.Item>
               </Col>
@@ -119,6 +164,34 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
               <Col span={12}>
                 <Form.Item label="Website">
                   <Input name="website" value={values.website} onChange={handleChange} />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={12}>
+                <Form.Item
+                  label="Latitude"
+                  validateStatus={errors.address?.geo?.lat ? "error" : ""}
+                >
+                  <Input
+                    name="address.geo.lat"
+                    value={values.address.geo.lat}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Longtitude"
+                  validateStatus={errors.address?.geo?.lng ? "error" : ""}
+                >
+                  <Input
+                    name="address.geo.lng"
+                    value={values.address.geo.lng}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
                 </Form.Item>
               </Col>
             </Row>
