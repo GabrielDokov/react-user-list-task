@@ -1,5 +1,6 @@
-import { render, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import AppLayout from "./AppLayout";
+import renderWithProviders from "../../renderWithProviders";
 
 jest.mock("react-router", () => ({
   useNavigate: () => jest.fn(),
@@ -8,7 +9,7 @@ jest.mock("react-router", () => ({
 
 describe("components > AppLayout", () => {
   it("should match the snapshot", async () => {
-    const { asFragment } = render(<AppLayout />);
+    const { asFragment } = renderWithProviders(<AppLayout />);
 
     await waitFor(() => {
       expect(asFragment()).toBeTruthy();

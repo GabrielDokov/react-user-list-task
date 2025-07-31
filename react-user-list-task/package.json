@@ -32,7 +32,7 @@
     ]
   },
   "scripts": {
-    "test:watch": "react-scripts test",
+    "test:watch": "react-scripts test --watchAll",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
