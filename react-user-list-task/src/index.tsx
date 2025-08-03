@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import reduxStore from "./store";
 import NotificationContextProvider from "./context/NotificationContextProvider";
+import "./localization/i18n";
 
 const store = reduxStore();
 
