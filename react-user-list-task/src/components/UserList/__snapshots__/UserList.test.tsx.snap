@@ -5,7 +5,7 @@ exports[`components > UserList should match the snapshot with data from redux 1`
   <h1
     class="ant-typography title css-dev-only-do-not-override-1vjf2v5"
   >
-    Users
+    titles.users
   </h1>
   <div
     class="ant-collapse ant-collapse-icon-position-start css-dev-only-do-not-override-1vjf2v5"
@@ -101,7 +101,7 @@ exports[`components > UserList should match the snapshot with no data 1`] = `
   <h1
     class="ant-typography title css-dev-only-do-not-override-1vjf2v5"
   >
-    Users
+    titles.users
   </h1>
   <div
     class="ant-collapse ant-collapse-icon-position-start css-dev-only-do-not-override-1vjf2v5"
