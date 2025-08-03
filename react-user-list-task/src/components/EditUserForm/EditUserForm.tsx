@@ -6,6 +6,7 @@ import { updateUser } from "../../features/slices/userInfoSlice";
 import { validationSchema } from "./formConfig";
 import { useContext } from "react";
 import { NotificationContext } from "../../context/NotificationContextProvider";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   user: UserData;
@@ -16,10 +17,11 @@ type Props = {
 const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
   const dispatch = useAppDispatch();
   const { notification } = useContext(NotificationContext);
+  const { t } = useTranslation();
 
   const handleEditUser = async (values: UserData, { resetForm }: FormikHelpers<UserData>) => {
     dispatch(updateUser(values));
-    notification.success({ message: "User updated successfully" });
+    notification.success({ message: t("notificationMessages.editUser") });
     resetForm();
     onClose();
   };
@@ -59,20 +61,21 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
                 }}
                 disabled={!dirty}
               >
-                Cancel
+                {t("buttons.cancel")}
               </Button>
               <Button onClick={() => handleSubmit()} disabled={!dirty || !isValid} type="primary">
-                Submit
+                {t("buttons.submit")}
               </Button>
             </>
           }
-          title={"Edit User Information"}
+          title={t("modalTitles.editUser")}
         >
           <Form>
             <Row gutter={24}>
               <Col span={12}>
                 <Form.Item
-                  label="Username"
+                  // label="Username"
+                  label={t("userData.username")}
                   validateStatus={errors.username ? "error" : ""}
                   required
                 >
@@ -85,7 +88,11 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Email" validateStatus={errors.email ? "error" : ""} required>
+                <Form.Item
+                  label={t("userData.email")}
+                  validateStatus={errors.email ? "error" : ""}
+                  required
+                >
                   <Input
                     name="email"
                     value={values.email}
@@ -98,7 +105,7 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
             <Row gutter={24}>
               <Col span={8}>
                 <Form.Item
-                  label="Street"
+                  label={t("userData.street")}
                   validateStatus={errors.address?.street ? "error" : ""}
                   required
                 >
@@ -112,7 +119,7 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
               </Col>
               <Col span={8}>
                 <Form.Item
-                  label="Suite"
+                  label={t("userData.suite")}
                   validateStatus={errors.address?.suite ? "error" : ""}
                   required
                 >
@@ -126,7 +133,7 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
               </Col>
               <Col span={8}>
                 <Form.Item
-                  label="City"
+                  label={t("userData.city")}
                   validateStatus={errors.address?.city ? "error" : ""}
                   required
                 >
@@ -141,12 +148,15 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
             </Row>
             <Row gutter={24}>
               <Col span={12}>
-                <Form.Item label="Name">
+                <Form.Item label={t("userData.name")}>
                   <Input name="name" value={values.name} onChange={handleChange} />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Zipcode" validateStatus={errors.address?.street ? "error" : ""}>
+                <Form.Item
+                  label={t("userData.zipcode")}
+                  validateStatus={errors.address?.street ? "error" : ""}
+                >
                   <Input
                     name="address.zipcode"
                     value={values.address.zipcode}
@@ -158,12 +168,12 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
             </Row>
             <Row gutter={24}>
               <Col span={12}>
-                <Form.Item label="Phone">
+                <Form.Item label={t("userData.phone")}>
                   <Input name="phone" value={values.phone} onChange={handleChange} />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Website">
+                <Form.Item label={t("userData.website")}>
                   <Input name="website" value={values.website} onChange={handleChange} />
                 </Form.Item>
               </Col>
@@ -171,7 +181,7 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
             <Row gutter={24}>
               <Col span={12}>
                 <Form.Item
-                  label="Latitude"
+                  label={t("userData.lat")}
                   validateStatus={errors.address?.geo?.lat ? "error" : ""}
                 >
                   <Input
@@ -184,7 +194,7 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Longtitude"
+                  label={t("userData.lng")}
                   validateStatus={errors.address?.geo?.lng ? "error" : ""}
                 >
                   <Input

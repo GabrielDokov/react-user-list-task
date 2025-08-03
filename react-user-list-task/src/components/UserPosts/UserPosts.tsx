@@ -12,6 +12,7 @@ import classes from "./UserPost.module.scss";
 import { NotificationContext } from "../../context/NotificationContextProvider";
 import UserCard from "../UserCard/UserCard";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 const UserPosts = () => {
   const { userId } = useParams();
@@ -25,6 +26,7 @@ const UserPosts = () => {
   const [editingPost, setEditingPost] = useState<PostData | null>(null);
   const user = users.find((user) => user.id === Number(userId));
   const { notification } = useContext(NotificationContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (userId) {
@@ -50,7 +52,7 @@ const UserPosts = () => {
   return (
     <>
       <Modal
-        title="Are you sure you want to delete this post?"
+        title={t("modalTitles.deletePost")}
         onCancel={() => setIsDeleteModalOpen(false)}
         open={isDeleteModalOpen}
         footer={
@@ -61,10 +63,10 @@ const UserPosts = () => {
                 setDeletePostId(null);
               }}
             >
-              Cancel
+              {t("buttons.cancel")}
             </Button>
             <Button onClick={() => handleDeleteConfirm()} type="primary" danger>
-              Delete
+              {t("buttons.delete")}
             </Button>
           </>
         }
@@ -75,16 +77,16 @@ const UserPosts = () => {
         type="link"
         onClick={() => navigate("/")}
       >
-        Back to Users
+        {t("buttons.backToUsers")}
       </Button>
-      <Typography.Title className={classes.title}>Posts</Typography.Title>
+      <Typography.Title className={classes.title}>{t("titles.posts")}</Typography.Title>
 
       <Col xs={12}>
         {user && (
           <UserCard
             extra={
               <Button type="primary" onClick={() => setIsFormOpen(true)}>
-                Edit
+                {t("buttons.edit")}
               </Button>
             }
             user={user}
@@ -105,7 +107,7 @@ const UserPosts = () => {
         />
       )}
       {posts.length === 0 && !isLoading ? (
-        <Empty description={<Typography.Text>No posts</Typography.Text>} />
+        <Empty description={<Typography.Text>{t("empty.noPosts")}</Typography.Text>} />
       ) : (
         <List
           grid={{ gutter: [24, 24], column: 4 }}

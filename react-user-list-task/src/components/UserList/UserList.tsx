@@ -6,11 +6,13 @@ import { useNavigate } from "react-router";
 import { UserData } from "../../types/UserData";
 import classes from "./UserList.module.scss";
 import UserCard from "../UserCard/UserCard";
+import { useTranslation } from "react-i18next";
 
 const UserList = () => {
   const [editingUser, setEditingUser] = useState<UserData | null>(null);
   const { users, isLoading } = useAppSelector((state) => state.userInfo);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -21,7 +23,7 @@ const UserList = () => {
         <Spin fullscreen spinning={isLoading} />
       ) : (
         <>
-          <Typography.Title className={classes.title}>{"Users"}</Typography.Title>
+          <Typography.Title className={classes.title}>{t("titles.users")}</Typography.Title>
           <Collapse
             style={{ width: 800 }}
             accordion
@@ -32,10 +34,10 @@ const UserList = () => {
                 <UserCard user={user}>
                   <Flex className={classes.buttonsContainer}>
                     <Button type="primary" onClick={() => setEditingUser(user)}>
-                      Edit
+                      {t("buttons.edit")}
                     </Button>
                     <Button type="primary" onClick={() => navigate(`/posts/${user.id}`)}>
-                      See Posts
+                      {t("buttons.seePosts")}
                     </Button>
                   </Flex>
                 </UserCard>

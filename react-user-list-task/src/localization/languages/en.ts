@@ -13,9 +13,12 @@ export const en = {
       previous: "Previous",
       next: "Next",
       submit: "Submit",
+      cancel: "Cancel",
     },
-    user: {
+    userData: {
+      title: "User Information",
       username: "Username",
+      name: "Name",
       email: "Email",
       phone: "Phone",
       website: "Website",
@@ -26,10 +29,34 @@ export const en = {
       lat: "Latitude",
       lng: "Longitude",
     },
+    postsData: {
+      title: "Title",
+      body: "Body",
+    },
     modalTitles: {
       editUser: "Edit User Information",
-      editPosts: "Edit User Post",
-      deletePosts: "Are you sure you want to delete this post?",
+      editPost: "Edit User Post",
+      deletePost: "Are you sure you want to delete this post?",
+    },
+    notificationMessages: {
+      postUpdate: "Post Updated Successfully",
+      editUser: "User updated successfully",
+      statusUpdate: "Status successfully changed",
+    },
+    empty: {
+      noPosts: "No posts",
+    },
+    tasksPage: {
+      filterByTitle: "Filter By Title",
+      filterByStatus: "Filter By Status",
+      filterByOwner: "Filter By Owner",
+      title: "Title",
+      owner: "Owner",
+      status: "Status",
+      action: "Action",
+      completed: "Completed",
+      notCompleted: "Not Completed",
+      pageInfo: "Page {{currentPage}} of {{totalPages}}",
     },
   },
 } as const;

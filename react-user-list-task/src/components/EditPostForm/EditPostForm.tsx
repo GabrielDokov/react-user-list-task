@@ -5,6 +5,7 @@ import { PostData } from "../../types/PostsData";
 import { useAppDispatch } from "../../store";
 import { updatePostThunk } from "../../features/thunks/updatePostThunk";
 import { NotificationInstance } from "antd/es/notification/interface";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   post: PostData;
@@ -15,10 +16,11 @@ type Props = {
 
 const EditPostForm = ({ post, isOpen, onClose, notificationApi }: Props) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const handleEditPost = async (values: PostData, { resetForm }: FormikHelpers<PostData>) => {
     await dispatch(updatePostThunk(values));
-    notificationApi.success({ message: "Post Updated Successfully" });
+    notificationApi.success({ message: t("notificationMessages.postUpdate") });
     resetForm();
     onClose();
   };
@@ -57,19 +59,23 @@ const EditPostForm = ({ post, isOpen, onClose, notificationApi }: Props) => {
                   onClose();
                 }}
               >
-                Cancel
+                {t("buttons.cancel")}
               </Button>
               <Button onClick={() => handleSubmit()} disabled={!dirty || !isValid} type="primary">
-                Submit
+                {t("buttons.submit")}
               </Button>
             </>
           }
-          title={"Edit User Post"}
+          title={t("modalTitles.editPost")}
         >
           <Form>
             <Row gutter={24}>
               <Col span={24}>
-                <Form.Item label="Title" validateStatus={errors.title ? "error" : ""} required>
+                <Form.Item
+                  label={t("postsData.title")}
+                  validateStatus={errors.title ? "error" : ""}
+                  required
+                >
                   <Input
                     name="title"
                     value={values.title}
@@ -79,7 +85,11 @@ const EditPostForm = ({ post, isOpen, onClose, notificationApi }: Props) => {
                 </Form.Item>
               </Col>
               <Col span={24}>
-                <Form.Item label="Body" validateStatus={errors.body ? "error" : ""} required>
+                <Form.Item
+                  label={t("postsData.body")}
+                  validateStatus={errors.body ? "error" : ""}
+                  required
+                >
                   <Input.TextArea
                     rows={3}
                     name="body"
