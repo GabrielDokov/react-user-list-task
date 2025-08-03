@@ -29,7 +29,7 @@ const EditPostForm = ({ post, isOpen, onClose, notificationApi }: Props) => {
       validationSchema={validationSchema}
       enableReinitialize
       onSubmit={handleEditPost}
-      validateOnChange={false}
+      validateOnChange={true}
       validateOnBlur={true}
     >
       {({

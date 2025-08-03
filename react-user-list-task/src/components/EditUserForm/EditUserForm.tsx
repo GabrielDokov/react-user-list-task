@@ -30,7 +30,7 @@ const EditUserForm = ({ user, isFormOpen, onClose }: Props) => {
       validationSchema={validationSchema}
       enableReinitialize
       onSubmit={handleEditUser}
-      validateOnChange={false}
+      validateOnChange={true}
       validateOnBlur={true}
     >
       {({
