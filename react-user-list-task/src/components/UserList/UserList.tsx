@@ -35,7 +35,7 @@ const UserList = () => {
                       Edit
                     </Button>
                     <Button type="primary" onClick={() => navigate(`/posts/${user.id}`)}>
-                      See Post
+                      See Posts
                     </Button>
                   </Flex>
                 </UserCard>

@@ -50,7 +50,7 @@ const UserPosts = () => {
   return (
     <>
       <Modal
-        title={"Are you sure you want to delete this post?"}
+        title="Are you sure you want to delete this post?"
         onCancel={() => setIsDeleteModalOpen(false)}
         open={isDeleteModalOpen}
         footer={
@@ -77,65 +77,63 @@ const UserPosts = () => {
       >
         Back to Users
       </Button>
+      <Typography.Title className={classes.title}>Posts</Typography.Title>
 
-      <>
-        <Col xs={12}>
-          {user && (
-            <UserCard
-              extra={
-                <Button type="primary" onClick={() => setIsFormOpen(true)}>
-                  Edit
-                </Button>
-              }
-              user={user}
-              title={`Posts by ${user?.name}`}
-            />
-          )}
-        </Col>
-
+      <Col xs={12}>
         {user && (
-          <EditUserForm user={user} isFormOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
-        )}
-        <Divider />
-        {editingPost && (
-          <EditPostForm
-            post={editingPost}
-            isOpen={true}
-            onClose={() => setEditingPost(null)}
-            notificationApi={notification}
+          <UserCard
+            extra={
+              <Button type="primary" onClick={() => setIsFormOpen(true)}>
+                Edit
+              </Button>
+            }
+            user={user}
           />
         )}
-        {posts.length === 0 && !isLoading ? (
-          <Empty description={<Typography.Text>No posts</Typography.Text>} />
-        ) : (
-          <List
-            grid={{ gutter: [24, 24], column: 4 }}
-            loading={isLoading}
-            dataSource={posts}
-            renderItem={(post) => (
-              <Col>
-                <Card
-                  title={post.title}
-                  actions={[
-                    <Flex align="center" justify="center" gap={24}>
-                      <Button onClick={() => setEditingPost(post)} type="primary">
-                        Edit
-                      </Button>
-                      <Button type="primary" onClick={() => showDeleteConfirm(post.id)} danger>
-                        Delete
-                      </Button>
-                    </Flex>,
-                  ]}
-                >
-                  <Col className={classes.cardMeteContainer}>
-                    <Card.Meta description={post.body} />
-                  </Col>
-                </Card>
-              </Col>
-            )}
-          />
-        )}
-      </>
+      </Col>
+
+      {user && (
+        <EditUserForm user={user} isFormOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
+      )}
+      <Divider />
+      {editingPost && (
+        <EditPostForm
+          post={editingPost}
+          isOpen={true}
+          onClose={() => setEditingPost(null)}
+          notificationApi={notification}
+        />
+      )}
+      {posts.length === 0 && !isLoading ? (
+        <Empty description={<Typography.Text>No posts</Typography.Text>} />
+      ) : (
+        <List
+          grid={{ gutter: [24, 24], column: 4 }}
+          loading={isLoading}
+          dataSource={posts}
+          renderItem={(post) => (
+            <Col>
+              <Card
+                title={post.title}
+                actions={[
+                  <Flex align="center" justify="center" gap={24}>
+                    <Button onClick={() => setEditingPost(post)} type="primary">
+                      Edit
+                    </Button>
+                    <Button type="primary" onClick={() => showDeleteConfirm(post.id)} danger>
+                      Delete
+                    </Button>
+                  </Flex>,
+                ]}
+              >
+                <Col className={classes.cardMeteContainer}>
+                  <Card.Meta description={post.body} />
+                </Col>
+              </Card>
+            </Col>
+          )}
+        />
+      )}
     </>
   );
 };

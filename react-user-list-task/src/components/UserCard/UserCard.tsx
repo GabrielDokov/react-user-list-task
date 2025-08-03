@@ -5,13 +5,12 @@ import { UserData } from "../../types/UserData";
 type Props = {
   user: UserData;
   extra?: ReactNode;
-  title?: string;
   children?: ReactNode;
 };
 
-const UserCard = ({ user, children, extra, title }: Props) => {
+const UserCard = ({ user, children, extra }: Props) => {
   return (
-    <Card title={title} extra={extra}>
+    <Card title={user.name} extra={extra}>
       <Descriptions title="User Information" size="small">
         <Descriptions.Item label="Name">{user.name}</Descriptions.Item>
         <Descriptions.Item label="Username">{user.username}</Descriptions.Item>
